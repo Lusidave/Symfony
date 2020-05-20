@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+{% block title %} app_index {% endblock %}
+
+
+{% block body %}
+    {% if slug == null %}
+        <h1>Aucune série sélectionnée, veuillez choisir une série !</h1>
+    {% else %}
+        <h1>Slug : {{ slug }}</h1>
+    {% endif %}
+{% endblock %}
