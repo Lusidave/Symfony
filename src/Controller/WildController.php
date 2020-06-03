@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,7 +37,7 @@ class WildController extends AbstractController
      * Getting a program with a formatted slug for title
      *
      * @param string $slug The slugger
-     * @Route("/show/{slug<^[a-z0-9-]+$>}", defaults={"slug" = null}, name="wild_show")
+     * @Route("/show/{slug}", defaults={"slug" = null}, name="wild_show")
      * @return Response
      */
     public function showByProgram(?string $slug):Response
@@ -116,6 +117,21 @@ class WildController extends AbstractController
 
     return $this->render('wild/season.html.twig', [
         'season' => $season, 'program' => $program, 'episode' => $episode
+        ]);
+    }
+
+    /**
+     * @Route("/episode/{id}", name="episode")
+     * @param Episode $episode
+     * @return Response
+     */
+    public function showEpisode(Episode $episode) :Response
+    {
+        $season = $episode->getSeason();
+        $program = $season->getProgram();
+
+        return $this->render('wild/episode.html.twig', [
+            'season' => $season, 'program' => $program, 'episode' => $episode
         ]);
     }
 }
